@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WANK CHAT // 18+</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+:root { --bg: #ffb6c1; --panel: #fff0f5; --pink-dark: #ff69b4; --pink-darker: #d63384; --text: #5c0035; --shadow: 0 8px 0 rgba(214,51,132,0.3); }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', sans-serif; }
+body { background-color: var(--bg); background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffc0cb' fill-opacity='0.6'%3E%3Cpath d='M30 10c-2 0-3 2-3 4v10c-2 0-4 1-4 3s2 3 4 3h6c2 0 4-1 4-3s-2-3-4-3V14c0-2-1-4-3-4zm-6 20c-2 0-3 2-3 4s1 4 3 4h12c2 0 3-2 3-4s-1-4-3-4H24z'/%3E%3C/g%3E%3C/svg%3E"); background-size: 60px 60px; color: var(--text); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 40px 20px; position: relative; overflow-x: hidden; }
+.drip-splash { position: fixed; z-index: 9998; pointer-events: none; background: radial-gradient(circle, rgba(255,255,255,0.95) 10%, rgba(255,255,255,0.8) 40%, transparent 80%); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; animation: dripDown 4s linear forwards; box-shadow: 0 0 30px rgba(255,255,255,0.4); }
+.drip-splash::after { content: ''; position: absolute; top: 50%; left: 50%; width: 20%; height: 150%; background: linear-gradient(to bottom, rgba(255,255,255,0.8), transparent); transform: translateX(-50%); border-radius: 50px; }
+@keyframes dripDown { 0% { transform: scale(0.5) translateY(-50px); opacity: 1; } 50% { transform: scale(1.2) translateY(0px); opacity: 0.9; } 100% { transform: scale(1.5) translateY(100px); opacity: 0; } }
+#splash-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #fff; z-index: 99999; display: none; justify-content: center; align-items: center; animation: splashAnim 2s forwards; }
+@keyframes splashAnim { 0% { opacity: 1; transform: scale(1); } 80% { opacity: 0.9; } 100% { opacity: 0; transform: scale(1.1); display: none; } }
+#robot-widget { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); width: 120px; height: 180px; background: rgba(255,240,245,0.4); border: 2px dashed var(--pink-dark); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; z-index: 50; transition: transform 0.1s, background 0.3s; user-select: none; }
+#robot-widget:hover { background: rgba(255,240,245,0.8); }
+#robot-widget:active { transform: translateY(-50%) scale(0.95); }
+.robot-emoji { font-size: 60px; transition: transform 0.1s; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); }
+.robot-progress { margin-top: 10px; font-size: 14px; font-weight: 900; color: var(--pink-darker); background: #fff; padding: 2px 10px; border-radius: 20px; border: 2px solid var(--pink-dark); }
+.header { text-align: center; margin-bottom: 20px; z-index: 2; }
+.header h1 { font-size: 48px; font-weight: 900; color: #fff; text-shadow: 3px 3px 0 var(--pink-darker), -1px -1px 0 var(--pink-darker), 1px -1px 0 var(--pink-darker), -1px 1px 0 var(--pink-darker), 1px 1px 0 var(--pink-darker); letter-spacing: 2px; transform: rotate(-2deg); }
+.header p { font-weight: 700; font-size: 18px; color: var(--text); margin-top: 10px; }
+.container { width: 100%; max-width: 600px; z-index: 2; }
+.overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--pink-darker); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #fff; text-align: center; padding: 20px; }
+.overlay h2 { font-size: 40px; font-weight: 900; margin-bottom: 20px; }
+.overlay p { font-size: 18px; font-weight: 700; margin-bottom: 30px; max-width: 400px; }
+.input-group { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 300px; margin-bottom: 20px; }
+.overlay input { width: 100%; padding: 15px; border-radius: 12px; border: none; font-size: 18px; font-weight: 700; text-align: center; outline: none; color: var(--pink-darker); }
+.btn { background: #fff; color: var(--pink-darker); border: none; padding: 15px 40px; border-radius: 50px; font-size: 20px; font-weight: 900; cursor: pointer; box-shadow: 0 6px 0 rgba(0,0,0,0.2); transition: 0.1s; }
+.btn:active { transform: translateY(6px); box-shadow: none; }
+.switch-link { margin-top: 15px; font-size: 14px; font-weight: 700; text-decoration: underline; cursor: pointer; color: #fff; }
+.user-banner { background: var(--panel); border: 3px solid var(--pink-dark); border-radius: 50px; padding: 10px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 900; box-shadow: var(--shadow); }
+.logout-btn { background: var(--pink-darker); color: #fff; border: none; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: 700; }
+.leaderboard { background: var(--panel); border: 4px solid var(--pink-dark); border-radius: 20px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 30px; }
+.lb-title { font-size: 24px; font-weight: 900; text-align: center; margin-bottom: 15px; color: var(--pink-darker); }
+.lb-row { display: flex; justify-content: space-between; padding: 10px; border-bottom: 2px dashed var(--pink-dark); font-weight: 700; }
+.lb-row:last-child { border-bottom: none; }
+.lb-rank { color: var(--pink-dark); width: 30px; }
+.lb-name { flex: 1; color: var(--text); cursor: pointer; text-decoration: underline; }
+.lb-points { color: var(--pink-darker); font-weight: 900; }
+.create-box { background: var(--panel); border: 4px solid var(--pink-dark); border-radius: 20px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 40px; }
+textarea { width: 100%; height: 100px; border: 3px solid var(--pink-dark); border-radius: 12px; padding: 15px; font-size: 16px; font-weight: 700; color: var(--text); background: #fff; resize: none; outline: none; margin-bottom: 10px; }
+textarea:focus { border-color: var(--pink-darker); }
+input[type="file"] { width: 100%; padding: 10px; margin-bottom: 15px; border: 2px dashed var(--pink-dark); border-radius: 12px; font-weight: 700; color: var(--text); cursor: pointer; }
+.btn-row { display: flex; justify-content: space-between; align-items: center; }
+.btn-small { padding: 12px 24px; font-size: 16px; background: var(--pink-dark); color: #fff; box-shadow: 0 4px 0 var(--pink-darker); }
+.feed { display: flex; flex-direction: column; gap: 20px; }
+.post { background: var(--panel); border: 4px solid var(--pink-dark); border-radius: 20px; padding: 20px; box-shadow: var(--shadow); animation: slideIn 0.3s ease-out; }
+@keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.post-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px dashed var(--pink-dark); padding-bottom: 10px; }
+.post-user { font-weight: 900; font-size: 16px; color: var(--pink-darker); cursor: pointer; text-decoration: underline; }
+.post-content { font-size: 18px; font-weight: 700; line-height: 1.5; margin-bottom: 15px; }
+.post-media { width: 100%; max-height: 400px; object-fit: contain; border-radius: 12px; margin-bottom: 15px; border: 2px solid var(--pink-dark); }
+.score-badge { background: #fff; border: 3px solid var(--pink-dark); border-radius: 12px; padding: 5px 15px; font-size: 24px; font-weight: 900; color: var(--pink-darker); box-shadow: 0 4px 0 rgba(255,105,180,0.2); }
+.reactions { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+.reaction-btn { background: #fff; border: 2px solid var(--pink-dark); border-radius: 50px; padding: 5px 15px; font-size: 14px; font-weight: 900; color: var(--pink-darker); cursor: pointer; transition: all 0.2s; }
+.reaction-btn:hover { background: var(--pink-dark); color: #fff; }
+.reaction-btn:disabled { opacity: 0.5; cursor: not-allowed; background: #ddd; color: #888; border-color: #ccc; }
+.reaction-btn.voted { background: var(--pink-darker); color: #fff; border-color: var(--pink-darker); }
+.comments-section { margin-top: 20px; border-top: 2px dashed var(--pink-dark); padding-top: 15px; display: none; }
+.comments-section.open { display: block; }
+.comment-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; max-height: 200px; overflow-y: auto; }
+.comment { background: #fff; border: 2px solid var(--pink-dark); border-radius: 12px; padding: 10px 15px; font-size: 14px; font-weight: 700; }
+.comment-user { color: var(--pink-darker); font-size: 12px; margin-bottom: 4px; display: block; font-weight: 900; }
+.comment-input-row { display: flex; gap: 10px; }
+.comment-input-row input { flex: 1; border: 2px solid var(--pink-dark); border-radius: 50px; padding: 10px 15px; font-size: 14px; font-weight: 700; color: var(--text); outline: none; }
+#dm-modal { display: none; position: fixed; bottom: 20px; right: 20px; width: 350px; height: 450px; background: var(--panel); border: 4px solid var(--pink-dark); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 10000; flex-direction: column; overflow: hidden; }
+.dm-header { background: var(--pink-dark); color: #fff; padding: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: 900; }
+.dm-close { cursor: pointer; font-size: 20px; }
+.dm-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.dm-msg { max-width: 80%; padding: 10px 15px; border-radius: 15px; font-size: 14px; font-weight: 700; }
+.dm-msg.me { align-self: flex-end; background: var(--pink-dark); color: #fff; border-bottom-right-radius: 0; }
+.dm-msg.them { align-self: flex-start; background: #fff; border: 2px solid var(--pink-dark); color: var(--text); border-bottom-left-radius: 0; }
+.dm-input-row { display: flex; padding: 10px; background: #fff; border-top: 2px solid var(--pink-dark); }
+.dm-input-row input { flex: 1; border: 2px solid var(--pink-dark); border-radius: 50px; padding: 10px 15px; font-size: 14px; font-weight: 700; color: var(--text); outline: none; }
+.dm-input-row button { margin-left: 10px; padding: 10px 20px; font-size: 14px; box-shadow: 0 3px 0 var(--pink-darker); }
+</style>
+</head>
+<body>
+
+<div id="robot-widget" onclick="tapRobot()">
+    <div class="robot-emoji" id="robot-emoji">🤖</div>
+    <div class="robot-progress" id="robot-text">0 / 30</div>
+</div>
+
+<div id="splash-overlay"></div>
+
+<div id="age-gate" class="overlay">
+    <h2>🔞 WANK CHAT</h2>
+    <p>This website contains user-generated content that may not be suitable for minors. You must be 18 or older to enter.</p>
+    <button class="btn" onclick="checkAge()">I AM 18 OR OLDER</button>
+</div>
+
+<div id="auth-gate" class="overlay" style="display: none;">
+    <h2 id="auth-title">LOGIN</h2>
+    <p id="auth-desc">Enter your username and password.</p>
+    <div class="input-group">
+        <input type="text" id="auth-username" placeholder="Username" maxlength="15">
+        <input type="password" id="auth-password" placeholder="Password">
+    </div>
+    <button class="btn" onclick="handleAuth()" id="auth-btn">LOGIN</button>
+    <div class="switch-link" onclick="toggleAuthMode()" id="auth-switch">Don't have an account? Register here.</div>
+</div>
+
+<div id="dm-modal">
+    <div class="dm-header">
+        <span id="dm-title">Chat with someone</span>
+        <span class="dm-close" onclick="closeDM()">×</span>
+    </div>
+    <div class="dm-body" id="dm-body"></div>
+    <div class="dm-input-row">
+        <input type="text" id="dm-input" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendDM()">
+        <button class="btn btn-small" onclick="sendDM()">Send</button>
+    </div>
+</div>
+
+<div id="main-site" style="display: none; width: 100%; display: flex; flex-direction: column; align-items: center; z-index: 2;">
+    <div class="container">
+        <div class="header">
+            <h1>WANK CHAT</h1>
+            <p>Drop your post. Get rated. Get humbled.</p>
+        </div>
+        <div class="user-banner">
+            <span id="display-username">Not Logged In</span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+        <div class="leaderboard">
+            <div class="lb-title">🏆 TOP USERS 🏆</div>
+            <div id="leaderboard-list"></div>
+        </div>
+        <div class="create-box">
+            <textarea id="post-input" placeholder="Type your post here..."></textarea>
+            <input type="file" id="post-media" accept="image/*,video/*">
+            <div class="btn-row">
+                <span style="font-size: 12px; font-weight: bold; color: var(--pink-darker);">AI will rate this out of 10</span>
+                <button class="btn btn-small" onclick="submitPost()">Post It</button>
+            </div>
+        </div>
+        <div class="feed" id="feed"></div>
+    </div>
+</div>
+
+<!-- FIREBASE SCRIPTS -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+<script>
+// YOUR FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyDW7Mur_iGoGql6O-8LR000G4cu1vHA6-8",
+  authDomain: "wankchat.firebaseapp.com",
+  projectId: "wankchat",
+  storageBucket: "wankchat.firebasestorage.app",
+  messagingSenderId: "999776675677",
+  appId: "1:999776675677:web:af172ef6134d43227eeab4"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// --- ROBOT GAME ---
+let robotTaps = 0;
+function tapRobot() {
+    robotTaps++;
+    document.getElementById('robot-text').innerText = `${robotTaps} / 30`;
+    const emoji = document.getElementById('robot-emoji');
+    emoji.style.transform = 'scale(1.2)';
+    setTimeout(() => emoji.style.transform = 'scale(1)', 50);
+    if (robotTaps >= 30) {
+        triggerSplash();
+        robotTaps = 0;
+        document.getElementById('robot-text').innerText = `0 / 30`;
+    }
+}
+
+// --- DRIP SPLASHES ---
+function spawnSplash() {
+    const splash = document.createElement('div');
+    splash.className = 'drip-splash';
+    const size = 150 + Math.random() * 300;
+    splash.style.width = size + 'px';
+    splash.style.height = size + 'px';
+    const posX = Math.random() * 80;
+    const posY = Math.random() * 80;
+    splash.style.left = posX + 'vw';
+    splash.style.top = posY + 'vh';
+    document.body.appendChild(splash);
+    setTimeout(() => { splash.remove(); }, 4000);
+}
+setTimeout(spawnSplash, 500);
+setInterval(spawnSplash, 2000);
+
+// --- LOCAL SESSION ---
+let currentUser = localStorage.getItem('wankCurrentUser') || null;
+let users = {}; 
+let posts = [];
+let isRegisterMode = false;
+
+let allDMs = JSON.parse(localStorage.getItem('wankDMs')) || {}; 
+let activeDMUser = null;
+
+function triggerSplash() {
+    const splash = document.getElementById('splash-overlay');
+    splash.style.display = 'flex';
+    setTimeout(() => { splash.style.display = 'none'; }, 2000);
+}
+
+// --- CLOUD DATA LISTENERS ---
+db.collection("users").onSnapshot((snapshot) => {
+    users = {};
+    snapshot.forEach(doc => { users[doc.id] = doc.data(); });
+    renderLeaderboard();
+});
+
+db.collection("posts").orderBy("time", "desc").onSnapshot((snapshot) => {
+    posts = [];
+    snapshot.forEach(doc => { posts.push({ id: doc.id, ...doc.data() }); });
+    renderFeed();
+});
+
+// --- DM SYSTEM ---
+function openDM(username) {
+    if (!currentUser) return alert('Login to DM people!');
+    if (username === currentUser) return alert("You can't DM yourself.");
+    activeDMUser = username;
+    document.getElementById('dm-title').innerText = `Chat with @${username}`;
+    document.getElementById('dm-modal').style.display = 'flex';
+    renderDMs();
+}
+function closeDM() { document.getElementById('dm-modal').style.display = 'none'; activeDMUser = null; }
+
+function sendDM() {
+    if (!activeDMUser || !currentUser) return;
+    const input = document.getElementById('dm-input');
+    const text = input.value.trim();
+    if (!text) return;
+    
+    const threadId = [currentUser, activeDMUser].sort().join('_');
+    if (!allDMs[threadId]) allDMs[threadId] = [];
+    allDMs[threadId].push({ from: currentUser, text: text, time: Date.now() });
+    localStorage.setItem('wankDMs', JSON.stringify(allDMs));
+    
+    input.value = '';
+    renderDMs();
+}
+function renderDMs() {
+    if (!activeDMUser) return;
+    const threadId = [currentUser, activeDMUser].sort().join('_');
+    const msgs = allDMs[threadId] || [];
+    const body = document.getElementById('dm-body');
+    body.innerHTML = '';
+    msgs.forEach(m => {
+        const div = document.createElement('div');
+        div.className = `dm-msg ${m.from === currentUser ? 'me' : 'them'}`;
+        div.innerText = m.text;
+        body.appendChild(div);
+    });
+    body.scrollTop = body.scrollHeight;
+}
+
+// --- AUTH FLOW ---
+function checkAge() {
+    document.getElementById('age-gate').style.display = 'none';
+    if (currentUser) { loadSite(); } 
+    else { document.getElementById('auth-gate').style.display = 'flex'; }
+}
+function toggleAuthMode() {
+    isRegisterMode = !isRegisterMode;
+    document.getElementById('auth-title').innerText = isRegisterMode ? 'REGISTER' : 'LOGIN';
+    document.getElementById('auth-desc').innerText = isRegisterMode ? 'Create a new account to join.' : 'Enter your username and password.';
+    document.getElementById('auth-btn').innerText = isRegisterMode ? 'CREATE ACCOUNT' : 'LOGIN';
+    document.getElementById('auth-switch').innerText = isRegisterMode ? 'Already have an account? Login here.' : "Don't have an account? Register here.";
+}
+function simpleHash(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) { hash = ((hash << 5) - hash) + str.charCodeAt(i); hash |= 0; }
+    return hash.toString();
+}
+
+function handleAuth() {
+    const user = document.getElementById('auth-username').value.trim();
+    const pass = document.getElementById('auth-password').value;
+    if (!user || !pass) return alert('Please fill in both fields.');
+
+    if (isRegisterMode) {
+        if (users[user]) return alert('Username already exists! Try another one.');
+        
+        db.collection("users").doc(user).set({
+            password: simpleHash(pass),
+            points: 0
+        }).then(() => {
+            alert('Account created! You are now logged in.');
+            currentUser = user;
+            localStorage.setItem('wankCurrentUser', currentUser);
+            document.getElementById('auth-gate').style.display = 'none';
+            loadSite();
+        });
+    } else {
+        if (!users[user]) return alert('Account not found.');
+        if (users[user].password !== simpleHash(pass)) return alert('Incorrect password!');
+        
+        currentUser = user;
+        localStorage.setItem('wankCurrentUser', currentUser);
+        document.getElementById('auth-gate').style.display = 'none';
+        loadSite();
+    }
+}
+
+function logout() {
+    currentUser = null;
+    localStorage.removeItem('wankCurrentUser');
+    document.getElementById('main-site').style.display = 'none';
+    document.getElementById('auth-gate').style.display = 'flex';
+    document.getElementById('auth-username').value = '';
+    document.getElementById('auth-password').value = '';
+    closeDM();
+}
+
+function loadSite() {
+    document.getElementById('main-site').style.display = 'flex';
+    document.getElementById('display-username').innerText = `Logged in as: ${currentUser}`;
+}
+
+// --- RATING LOGIC ---
+function ratePost(text) {
+    if (text.length < 10) return 4; 
+    let score = Math.floor(Math.random() * 6) + 5; 
+    if (text.length > 50) score = Math.min(10, score + 1);
+    return score;
+}
+
+// --- ACTIONS ---
+function submitPost() {
+    if (!currentUser) return;
+    const input = document.getElementById('post-input');
+    const fileInput = document.getElementById('post-media');
+    const text = input.value.trim();
+    
+    if (!text && !fileInput.files[0]) return alert('You need to actually type or upload something.');
+
+    const score = ratePost(text);
+    if (score >= 8) triggerSplash();
+
+    const newPost = {
+        user: currentUser,
+        text: text,
+        score: score,
+        likes: 0,
+        dislikes: 0,
+        media: null,
+        mediaType: null,
+        comments: [],
+        time: Date.now()
+    };
+
+    // Save to Firebase
+    db.collection("posts").add(newPost).then(() => {
+        // Update user points in Firebase
+        db.collection("users").doc(currentUser).update({
+            points: firebase.firestore.FieldValue.increment(score)
+        });
+        resetInputs();
+    });
+}
+
+function resetInputs() {
+    document.getElementById('post-input').value = '';
+    document.getElementById('post-media').value = '';
+}
+
+function react(postId, type) {
+    if (!currentUser) return;
+    
+    const postRef = db.collection("posts").doc(postId);
+    if (type === 'like') {
+        postRef.update({ likes: firebase.firestore.FieldValue.increment(1) });
+    } else {
+        postRef.update({ dislikes: firebase.firestore.FieldValue.increment(1) });
+    }
+}
+
+function toggleComments(id) {
+    const el = document.getElementById(`comments-${id}`);
+    if (el) el.classList.toggle('open');
+}
+
+function addComment(postId, inputId) {
+    if (!currentUser) return;
+    const input = document.getElementById(inputId);
+    const text = input.value.trim();
+    if (!text) return;
+
+    const postRef = db.collection("posts").doc(postId);
+    postRef.update({
+        comments: firebase.firestore.FieldValue.arrayUnion({ user: currentUser, text: text })
+    }).then(() => {
+        input.value = '';
+    });
+}
+
+// --- RENDERING ---
+function renderLeaderboard() {
+    const list = document.getElementById('leaderboard-list');
+    list.innerHTML = '';
+
+    const sortedUsers = Object.entries(users).sort((a, b) => b[1].points - a[1].points).slice(0, 5); 
+    if (sortedUsers.length === 0) { list.innerHTML = '<div style="text-align: center; font-weight: 700; color: #999;">No scores yet.</div>'; return; }
+
+    sortedUsers.forEach((user, index) => {
+        const row = document.createElement('div');
+        row.className = 'lb-row';
+        
+        let medal = `#${index + 1}`;
+        if (index === 0) medal = '🥇';
+        if (index === 1) medal = '🥈';
+        if (index === 2) medal = '🥉';
+
+        row.innerHTML = `
+            <div class="lb-rank">${medal}</div>
+            <div class="lb-name" onclick="openDM('${escapeHtml(user[0])}')">@${escapeHtml(user[0])}</div>
+            <div class="lb-points">${user[1].points} pts</div>
+        `;
+        list.appendChild(row);
+    });
+}
+
+function renderFeed() {
+    const feed = document.getElementById('feed');
+    feed.innerHTML = '';
+
+    if (posts.length === 0) {
+        feed.innerHTML = '<div style="text-align: center; font-weight: 700; color: var(--pink-darker); margin-top: 20px;">No posts yet. Be the first to get rated.</div>';
+        return;
+    }
+
+    posts.forEach(post => {
+        const div = document.createElement('div');
+        div.className = 'post';
+        
+        let scoreColor = '#d63384';
+        if (post.score >= 8) scoreColor = '#00b894';
+        if (post.score <= 4) scoreColor = '#e74c3c';
+
+        let mediaHTML = '';
+        if (post.media) {
+            if (post.mediaType === 'video') {
+                mediaHTML = `<video src="${post.media}" controls class="post-media"></video>`;
+            } else {
+                mediaHTML = `<img src="${post.media}" class="post-media">`;
+            }
+        }
+
+        let commentsHTML = '';
+        if (post.comments && post.comments.length > 0) {
+            post.comments.forEach(c => {
+                commentsHTML += `<div class="comment"><span class="comment-user">@${escapeHtml(c.user)}</span>${escapeHtml(c.text)}</div>`;
+            });
+        } else {
+            commentsHTML = '<div style="font-size: 12px; font-weight: 700; color: #999;">No comments yet. Be the first!</div>';
+        }
+
+        div.innerHTML = `
+            <div class="post-header">
+                <span class="post-user" onclick="openDM('${escapeHtml(post.user || '')}')">@${escapeHtml(post.user || 'Anonymous')}</span>
+                <div class="score-badge" style="color: ${scoreColor}; border-color: ${scoreColor};">${post.score}/10</div>
+            </div>
+            <div class="post-content">${escapeHtml(post.text)}</div>
+            ${mediaHTML}
+            <div class="reactions">
+                <button class="reaction-btn" onclick="react('${post.id}', 'like')">🔥 ${post.likes}</button>
+                <button class="reaction-btn" onclick="react('${post.id}', 'dislike')">💩 ${post.dislikes}</button>
+                <button class="reaction-btn" onclick="toggleComments('${post.id}')" style="background: var(--panel); color: var(--text);">💬 Comments</button>
+            </div>
+            
+            <div class="comments-section" id="comments-${post.id}">
+                <div class="comment-list">${commentsHTML}</div>
+                <div class="comment-input-row">
+                    <input type="text" id="comment-input-${post.id}" placeholder="Add a comment...">
+                    <button class="btn btn-small" onclick="addComment('${post.id}', 'comment-input-${post.id}')">Reply</button>
+                </div>
+            </div>
+        `;
+        feed.appendChild(div);
+    });
+}
+
+function escapeHtml(unsafe) {
+    if (!unsafe) return "";
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+if (currentUser) {
+    document.getElementById('age-gate').style.display = 'none';
+    loadSite();
+}
+</script>
+</body>
+</html>
